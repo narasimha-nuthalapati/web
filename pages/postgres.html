@@ -1,0 +1,27 @@
+<h1>PostgreSQL</h1>
+1. data\pg_hba.conf file conatains accesss permissions and authentication methods like md5,trust etc. 
+2. data\postgresql.conf file conatins postgresql configuraion parameters.
+3. Enabling archivng in data\postgresql.conf file 
+wal_level = <b>archive</b>             # minimal, archive, hot_standby, or logical
+# - Archiving -
+
+archive_mode = <b>on</b>               # allows archiving to be done
+                                # (change requires restart)
+archive_command = <b>'test ! -f /opt/PostgreSQL/9.4/wal/%f && cp %p /opt/PostgreSQL/9.4/wal/%f'</b> # command to use to archive a logfile segment
+                                # placeholders: %p = path of file to archive
+                                #               %f = file name only
+                                # e.g. 'test ! -f /mnt/server/archivedir/%f && cp %p /mnt/server/archivedir/%f'
+#archive_timeout = 0            # force a logfile segment switch after this
+                                # number of seconds; 0 disables
+
+
+
+##Starting/Stoping server 
+from postgres bin directory 
+./pg_ctl -D ../data start/stop (as postgres user)
+su postgres -c "./pg_ctl -D ../data start/stop" (as root user)
+##Connecting to server 
+./psql -U postgres -p 5432 
+##Initializing new server 
+./pg_ctl -D newDataDir initdb
+##pgdump for backup 
