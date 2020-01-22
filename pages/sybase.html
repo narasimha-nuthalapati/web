@@ -1,0 +1,68 @@
+<html>
+  <head><title>Sybase</tilte></head>
+  <body>
+    <h1>Sybase</h1>
+    <br>
+    <pre>
+"
+Sybase intial setup commands 
+[root@narasimharhel1 ~]# groupadd sybase
+
+[root@narasimharhel1 ~]# useradd -g sybase sybase
+
+[root@narasimharhel1 ~]# id sybase
+
+[root@narasimharhel1 ~]# mkdir /opt/sap
+
+[root@narasimharhel1 ~]# chmod -R 777 /opt/sap
+
+[root@narasimharhel1 ~]# chown -R sybase.sybase /opt/sap
+
+[root@narasimharhel1 ~]# chmod -R 777 /root/ebf26122/
+
+[root@narasimharhel1 ~]# chown -R sybase.sybase /root/ebf26122/
+
+[root@narasimharhel1 ~]# cd /root/ebf26122/
+
+[root@narasimharhel1 ~]# cp -rp /root/ebf26122 /home/sybase/ebf26122
+
+[root@narasimharhel1 ~]# cd /home/sybase/ebf26122/
+
+[root@narasimharhel1 ~]# su sybase
+
+[sybase@narasimharhel1 root]$ . /opt/sap/SYBASE.sh
+
+//Start server 
+[sybase@narasimharhel1 root]/opt/sap/ASE-16_0/bin/startserver -f /opt/sap/ASE-16_0/install/RUN_SYBDB
+ 
+ // Run backup server 
+[sybase@narasimharhel1 root]$ /opt/sap/ASE-16_0/install/RUN_SYBDB_BS &
+
+//SA user to connect sql prompt 
+[sybase@narasimharhel1 ebf26122]$ cd /opt/sap/OCS-16_0/bin/
+[sybase@narasimharhel1 bin]$ ./isql64 -Usa -SSYBDB
+password:XXXXXXXXXXXXXX
+
+//Query to display databases
+1> select name from sysdatabases
+2> go
+ name
+ --------------------
+ master
+ model
+ sybsystemdb
+ sybsystemprocs
+ tempdb
+ 
+(5 rows affected)
+
+
+//Shutdown server
+1> shutdown
+2> go
+Server SHUTDOWN by request.
+ASE is terminating this process.
+"
+</pre>
+  </body>
+  </html>
